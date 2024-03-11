@@ -79,7 +79,7 @@ public static void main(String[] args) {
 		//executeInsert이런건 없고, executeUpdate로 다 있음 (세 개+ddl 을 다 이걸로 커버)
 		//int result = pstmt.executeUpdate(sql); //결과가 정수로 반환됨 
 		int result = pstmt.executeUpdate(); //결과가 정수로 반환됨 
-		//pstmtm에는 생성시부터 sql을 받았기 때문에 여기서 또 넣어주면 안된다
+		//pstmt에는 생성시부터 sql을 받았기 때문에 여기서 또 넣어주면 안된다
 		//빈칸에 위에서 값 넣었는데 sql을 또 적으면 다시 빈칸으로 돌아가므로 매개변수를 넣으면 안된다
 		// -> PreparedStatement SQL 수행 시
 		//		메서드 매개변수로 SQL을 전달하면 안된다!!!!!
