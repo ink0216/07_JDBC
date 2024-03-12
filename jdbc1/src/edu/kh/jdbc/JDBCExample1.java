@@ -97,7 +97,7 @@ public class JDBCExample1 {
 			//Connection에 연결된 DB로 SQL을 전달하고 결과를 받아오는 Statement 객체 생성함(왔다갔다 하도록)
 			
 			/* 5. Statement 객체를 이용해서 SQL 수행 후 결과 반환받기*/
-			rs =stmt.executeQuery(sql); //반환된 것 저장
+			rs =stmt.executeQuery(sql); //반환된 것 저장 //6번과 비교해보기
 			//Query를 실행하겠다 //매개변수로 우리가 만들어놓은 sql넣기
 			//executeQuery - >resultset이 반환됨
 			

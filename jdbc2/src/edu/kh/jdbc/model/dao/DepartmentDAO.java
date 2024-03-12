@@ -14,7 +14,7 @@ import java.util.List;
 import edu.kh.jdbc.common.JDBCTemplate;
 import edu.kh.jdbc.model.dto.Department;
 
-public class DepartmentDAO {
+public class DepartmentDAO { //db와 연결해서 sql 수행하고 결과 반환받아주는 역할 함
 	//필드
 	//db로 왔다리갔다리 함
 	/* JDBC 객체 참조 변수 선언->공공재로 사용할 수 있게 올림*/
@@ -119,4 +119,143 @@ public class DepartmentDAO {
 		}
 		return deptList; //이걸 반환할거야
 	}
+	/**부서 검색
+	 * @param title
+	 * @return deptList
+	 * @throws SQLException
+	 */
+	public List<Department> selectDepartmentTitle(String title) throws SQLException{
+		//어디서든지 접근 가능하고 리스트를 반환하는 메서드
+		//결과 저장용 변수 선언 또는 객체 생성
+		List<Department> deptList = new ArrayList<Department>();
+		try {
+			//1. 커넥션 얻어오기 (JDBC에서)
+			conn = getConnection(); //앞에 JDBCTemplate안써도 됨 (위에 import static 썼기 때문에!)
+			
+			//2. SQL 작성하기
+			String sql="SELECT * FROM DEPARTMENT4 "
+					+ "WHERE DEPT_TITLE LIKE '%'|| ?||'%'"; //? placeholder가 문자 그대로인 ?로 인식되지 않도록 이렇게 함
+			//3. PreparedStatement 객체 생성 + 이거는 생성되자마자 sql을 객체 안에 적재를 시켜놓는다
+			pstmt=conn.prepareStatement(sql); //적재하니까 sql에 빈칸이 있네?
+			
+			//4. ?에 알맞은 값 대입하기
+			pstmt.setString(1, title);
+			
+			//5. SQL(SELECT) 수행 후 결과(ResultSet) 반환 받기
+			rs=pstmt.executeQuery();
+			
+			//6. rs는 한 행씩 접근하며 컬럼값 얻어오기
+			//	->얻어온 컬럼 값을 이용해 Department 객체를 생성한 후
+			//		deptList에 옮겨담기 (rs는 사용 후 닫아줘야 하므로) ->옮겨담은 deptList를 반환해주기
+			while(rs.next()) {
+				//만약 조회된 것이 하나도 없으면 while문  한 번도 실행하지 않음
+				String deptId = rs.getString("DEPT_ID");
+				String deptTitle = rs.getString("DEPT_TITLE");
+				String locationId = rs.getString("LOCATION_ID");
+				
+				//Department 객체를 생성한 후
+				Department dept=new Department(deptId, deptTitle, locationId);
+				deptList.add(dept); //다 옮겨담는다
+			}
+		}finally {
+			//7. 사용한 JDBC 객체 자원 반환하기
+			close(rs);
+			close(pstmt);
+			close(conn); //JDBCTemplate에 처리 해둠
+		}
+		return deptList;
+	}
+	public int deleteDepartment(String deptId) throws SQLException {
+		int result = 0;
+		try {
+			//1. Connection 만들기
+			conn=getConnection();
+			
+			//2. SQL 작성하기
+			String sql = "DELETE FROM DEPARTMENT4 "
+					+ "WHERE DEPT_ID = ?"; //? placeholder가 문자 그대로인 ?로 인식되지 않도록 이렇게 함
+			//빈칸 -> PreparedStatement 쓰겠네
+			//3. ? 빈칸 채우기
+			//3. PreparedStatement 객체 생성 + 이거는 생성되자마자 sql을 객체 안에 적재를 시켜놓는다
+			pstmt=conn.prepareStatement(sql); //적재하니까 sql에 빈칸이 있네?
+			
+		//4. ?에 알맞은 값 대입하기
+			pstmt.setString(1, deptId);
+		//5. SQL(SELECT) 수행 후 결과(ResultSet) 반환 받기
+			result=pstmt.executeUpdate();
+			
+		//6. 결과에 따라서 트랜잭션 제어 처리하기
+			if(result>0) commit(conn);
+			else				rollback(conn); //얘네들도 앞에 클래스명 안써도 된다
+		}finally {
+			close(pstmt);
+			close(conn); //JDBCTemplate에 처리 해둠
+		}
+		return result;
+	}
+	/**부서명 수정하기
+	 * @param deptId
+	 * @param deptTitle
+	 * @return result
+	 * @throws SQLException
+	 */
+	public int updateDepartment(String deptId, String deptTitle) throws SQLException {
+		int result = 0; //결과 저장용 변수
+		try {
+			conn=getConnection(); //커넥션 얻어오기
+			String sql="UPDATE DEPARTMENT4 "
+					+ "SET DEPT_TITLE= ? "
+					+ "WHERE DEPT_ID =?";
+			
+			pstmt=conn.prepareStatement(sql);//? 있으므로 PreparedStatement 객체 생성 & sql 적재
+			
+			pstmt.setString(1, deptTitle);
+			pstmt.setString(2, deptId);
+			result = pstmt.executeUpdate(); //SQL 수행 후 결과 반환 받기
+			
+			//결과에 따라서 트랜잭션 제어 처리하기
+			if(result>0) commit(conn);
+			else rollback(conn);
+		}finally {
+			close(pstmt);
+			close(conn); //JDBCTemplate에 처리 해둠
+		}
+		return result; //결과 반환
+	}
+	/**부서코드가 존재하는지 확인
+	 * @param deptId
+	 * @return check
+	 * @throws SQLException
+	 */
+	public int checkDepartment(String deptId) throws SQLException{
+		int result = 0; //결과 저장용 변수 선언
+		try {
+			//1. 커넥션 얻어오기
+			conn=getConnection();
+			//2. SQL 작성하기
+			String sql="SELECT COUNT(*) FROM DEPARTMENT4 "
+					+ "WHERE DEPT_ID= ?";
+			//3.PreparedStatement 객체 생성하기
+			pstmt = conn.prepareStatement(sql);
+			//4. 빈칸 채우기
+			pstmt.setString(1, deptId);
+			//5. SQL(SELECT) 수행 후 결과(ResultSet) 반환받기
+			rs=pstmt.executeQuery();//SELECT 실행
+			//6. 한 행 씩 접근해서 컬럼값 얻어오기
+			//근데 그룹함수는 무조건 1행만 나옴 ->while문 쓸 필요 없음
+			if(rs.next()) {
+				//result=rs.getInt("COUNT(*)"); --조회된 컬럼명 써도 되고
+				result=rs.getInt(1);//조회된 컬럼 순서로 써도 된다 (order by절 처럼)
+				//if문이든, while문이든 조건식이 true일 때 수행하는데,
+				//while문 쓸 경우 한번 검사 후 첫 번째 행 존재해서 수행한 후에 또 와서 다시 검사해봄(두 번 검사하므로 비효율적)
+				//->조회 결과가 1행만 있을 경우에는 if문이 while문보다 더 효율적이다
+			}
+		}finally {
+			close(rs);
+			close(pstmt);
+			close(conn);
+		}
+		return result; //여기에 저장된 값이 마지막에 반환될것이다
+	}
+	
 }

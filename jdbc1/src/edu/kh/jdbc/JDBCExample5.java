@@ -56,7 +56,7 @@ public static void main(String[] args) {
 		//이번에는 insert를 수행할 것임!
 		//insert, update, delete 묶어서 update로 취급해도 됨
 		//executeInsert이런건 없고, executeUpdate로 다 있음 (세 개+ddl 을 다 이걸로 커버)
-		int result = stmt.executeUpdate(sql); //결과가 정수로 반환됨 
+		int result = stmt.executeUpdate(sql); //결과가 정수로 반환됨  //6번과 비교해보기
 		
 		/* 6. 수행 결과에 따라 트랜잭션 제어 처리해주기*/
 		//여기서는 결과로 result set이 안나오므로 while문 쓸 필요 없음

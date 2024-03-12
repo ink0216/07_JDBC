@@ -60,7 +60,7 @@ public static void main(String[] args) {
 		stmt = conn.createStatement(); //Connection을 이용해서 생성하기
 		
 		/* 5. Statement 객체를 이용해서 SQL 수행 후 결과 반환받기*/
-		rs = stmt.executeQuery(sql);
+		rs = stmt.executeQuery(sql); //6번과 비교해보기
 		//SELECT문 : DQL
 		
 		/* 6. ResultSet 객체를 1행 씩 접근하며 컬럼 값 얻어오기*/

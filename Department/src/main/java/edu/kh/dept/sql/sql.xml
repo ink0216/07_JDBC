@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+	<entry key="selectAll"> 
+	<!-- /selectAll 하면 value로 셀렉트 결과가 나옴 -->
+		SELECT * FROM DEPARTMENT4
+		ORDER BY DEPT_ID
+	</entry>
+</properties>

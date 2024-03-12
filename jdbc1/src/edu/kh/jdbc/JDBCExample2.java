@@ -58,7 +58,7 @@ public static void main(String[] args) {
 		stmt = conn.createStatement(); //Connection을 이용해서 생성하기
 		
 		/* 5. Statement 객체를 이용해서 SQL 수행 후 결과 반환받기*/
-		rs = stmt.executeQuery(sql); //쿼리를 수행해서 반환받은 ResultSet를 저장하기
+		rs = stmt.executeQuery(sql); //쿼리를 수행해서 반환받은 ResultSet를 저장하기 //6번과 비교해보기
 		//SELECT 수행 시 RESULT SET이 반환됨!!!!
 		
 		/* 6. ResultSet 객체를 1행 씩 접근하며 컬럼 값 얻어오기*/
