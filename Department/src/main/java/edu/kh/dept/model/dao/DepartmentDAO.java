@@ -15,4 +15,12 @@ public interface DepartmentDAO {
 	 */
 	List<Department> selectAll(Connection conn) throws SQLException;
 	//인터페이스에서 구현
+
+	/**부서 추가
+	 * @param conn
+	 * @param dept
+	 * @return result
+	 * @throws SQLException
+	 */
+	int insertDepartment(Connection conn, Department dept) throws SQLException;
 }

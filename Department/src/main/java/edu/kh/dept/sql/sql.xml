@@ -1,9 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
 <properties>
-	<entry key="selectAll"> 
-	<!-- /selectAll 하면 value로 셀렉트 결과가 나옴 -->
+<!-- 모든 부서 조회 -->
+	<entry key="selectAll">  <!-- 키 밸류의 한 쌍 ==entry -->
+	<!-- key=selectAll 하면 그에 대한 value로 셀렉트 결과가 나옴 -->
 		SELECT * FROM DEPARTMENT4
 		ORDER BY DEPT_ID
+	</entry>
+	
+	<!-- 부서 추가 -->
+	<entry key="insertDepartment">
+		INSERT INTO DEPARTMENT4
+		VALUES(?,?,?) 
+		<!-- 컬럼이 세개임! -->
 	</entry>
 </properties>

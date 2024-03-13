@@ -12,6 +12,7 @@ import java.util.List;
 import edu.kh.dept.model.dao.DepartmentDAO;
 import edu.kh.dept.model.dao.DepartmentDAOImpl;
 import edu.kh.dept.model.dto.Department;
+import edu.kh.dept.model.exception.DepartmentInsertException;
 
 //트랜잭션 제어 처리 
 // -> 하나의 Service 메서드가 여러 DAO 메서드를 호출할 수 있다!
@@ -48,5 +49,51 @@ public class DepartmentServiceImpl implements DepartmentService{
 		
 		/* 5. 결과 반환하기*/
 		return deptList;
+	}
+	
+	//부서 추가 서비스
+	//서비스에서 트랜잭션 제어 처리 해야함
+	//커밋 롤백을 하려면 커넥션이 있어야 함!
+	@Override
+	public int insertDepartment(Department dept) throws DepartmentInsertException {
+		int result=0; //결과 저장 변수
+		
+		//1. 커넥션 얻어오기
+		Connection conn = getConnection(); //JDBCTemplate에 만듬 
+		try {
+			
+			//2. 데이터 가공 할 필요 없이 있는 그대로 DB에 넣기
+			// DAO 메서드 호출 후 결과 반환 받기
+			//(DAO 메서드 수행 시 커넥션이 필요하기 때문에 매개변수로 conn을 전달해야함!!)
+			//(DB와의 연결 정보 담고있는 conn을 넘겨줘야 DAO가 DB와 연결할 수 있다)
+			result = dao.insertDepartment(conn,dept); //두 값을 보낸다
+			//여기서 에러 던지면 밑의 코드가 수행 안되나???*****************************************************
+			
+			//3. DAO 수행 결과가 오면, 결과에 따라 트랜잭션 제어 처리하기
+			if(result>0) commit(conn); //성공
+			else				rollback(conn); //실패
+		}catch(SQLException e) {
+			//dao에서 예외 발생하면 여기서 처리
+			//dao에서 예외 발생한것을 바로 던지면 그 밑의 코드가 수행 안돼서
+			//PK 제약조건 위배 / NOT NULL 제약조건 위배(부서코드 안 적은 경우 발생)
+			e.printStackTrace(); //->나중에는 log라고 해서 파일에 에러 내용 적음
+			//예외 발생 시 무조건 rollback하기
+			rollback(conn);
+			
+			/* 제약조건 위배로 인해서 정상 수행되지 않음을 표현하기 위해
+			 * 강제로 예외를 하나 더 발생시키기!!! ->이 때 "사용자 정의 예외"를 이용한다!!*/
+			//실수했다는 것을 알려주기 위해서
+			//throw이용해서 강제 예외 발생시키기
+			throw new DepartmentInsertException(); //호출한 곳으로 던짐
+		} finally { //무조건적으로 실행하므로 ->try 구문에서 오류가 생겨도 무조건적으로 finally구문 수행하므로 커넥션이 안닫히는 문제 해결함
+		//4. 사용한 커넥션 반환 처리하기
+			close(conn);
+		}
+		
+		
+		
+		//5. 결과 반환하기
+		return result;
+		
 	}
 }
