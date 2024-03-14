@@ -14,4 +14,31 @@
 		VALUES(?,?,?) 
 		<!-- 컬럼이 세개임! -->
 	</entry>
+	
+	<!-- 부서 삭제 -->
+	<entry key="deleteDepartment">
+	DELETE FROM DEPARTMENT4
+	WHERE DEPT_ID=?
+	</entry>
+	
+	<!-- 부서 1행 조회 -->
+	<entry key="selectOne">
+	SELECT * FROM DEPARTMENT4
+	WHERE DEPT_ID=?
+	<!-- PK를 조건으로 삼은 SELECT문은 조회 성공 시 1행만 조회된다!!!!! -->
+	</entry>
+	
+	<!-- 부서 수정하기 -->
+	<entry key="updateDepartment">
+	<!-- 이 key를 호출하면 이 value값들이 반환된다 -->
+	UPDATE DEPARTMENT4
+	SET DEPT_TITLE=? , <!-- 여기에 '?'라고 하면 안된다! ?라고 쓰면 pstmt는 자동으로 ? 양옆에 ''이 붙음 -->
+			LOCATION_ID=?
+	WHERE DEPT_ID=?
+	</entry>
+	
+	<entry key="searchDepartment">
+	SELECT * FROM DEPARTMENT4
+	WHERE DEPT_TITLE LIKE '%'||?||'%'
+	</entry>
 </properties>

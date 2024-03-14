@@ -40,7 +40,9 @@
     <hr><hr><hr>
     
 <h1>여러 부서 한 번에 추가 하기</h1>
-<%-- 같은 deptId 라는 name속성을 가진 파라미터가 여러개일 경우 배열로 넘어감 ->index 0,1,2,...번끼리 묶어서 insert 여러번 진행  --%>
+<%-- 같은 deptId 라는 name속성을 가진 파라미터가 여러개일 경우 파라미터배열로 넘어감 
+->index 0,1,2,...번끼리 묶어서 insert 여러번 진행  --%>
+
 <form action="/department/multiInsert" method="post" name="multiInsertForm">
     
     <button type="button" id="addBtn">입력 추가</button>

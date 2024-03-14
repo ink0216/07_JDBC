@@ -18,5 +18,12 @@
                 ->a태그는 get방식 요청이므로 insert.jsp로 요청위임  -->
         </li>
     </ul>
+    <hr>
+    <h3>부서명으로 검색(검색어가 부서명에 포함된 부서 모두 조회하기)</h3>
+    <form action="/department/search" method="GET">
+        검색어 입력 : 
+        <input type="text" name="keyword">
+        <button>검색</button>
+    </form>
 </body>
 </html>
