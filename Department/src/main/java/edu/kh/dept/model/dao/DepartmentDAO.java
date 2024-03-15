@@ -47,7 +47,8 @@ public interface DepartmentDAO {
 
 	/**부서 검색하기
 	 * @param conn
-	 * @return deptList
+	 * @return deptList(조회 결과가 없으면 null이 아니라 '비어있음'으로 반환함)
 	 */
 	List<Department> searchDepartment(Connection conn, String keyword)throws SQLException;
+	//null이라는 건 안좋아서 java optional이라는 객체 이용함
 }

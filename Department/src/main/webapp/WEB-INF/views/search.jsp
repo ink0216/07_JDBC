@@ -11,38 +11,47 @@
 </head>
 <body>
     <h1>${param.keyword} 검색 결과</h1>
-    <table border="1">
-        <%-- selectAll.jsp참고하기 --%>
-        <thead>
-		
-			<tr>
-				<th>행 번호</th> <%--몇 번 행인지 --%>
-				<th>부서 코드(DEPT_ID)</th>
-				<th>부서명(DEPT_TITLE)</th>
-				<th>지역 코드(LOCATION_ID)</th>
-			</tr>
-		</thead>
-        <tbody>
-		
-			<c:forEach items="${deptList}" var="dept" varStatus="vs">
-			<%-- 반복하면서 한줄씩 만듦 --%>
-			<%--하나씩 꺼낸 것을 dept라고 부를거다 --%>
-			<%--deptList가 여기에 출력될거임 --%>
-				<%--반복해서 넣어야 하므로 포이치 사용 --%>
-				<%--el : 표현할 때 사용, ==${} --%>
-				<%--varStatus : 반복되는 상태 기록(몇 바퀴 돌고있는지) --%>
+	<%-- el에서 쓰는 연산자  empty == 비어있거나 null인 경우 true를 반환 --%>
+	<c:if test="${empty deptList}">
+	<%-- 비어있거나 null일 때 if문 내 코드를 수행하므로 그때에만 나옴 --%>
+	<h3>검색 결과가 없습니다</h3>
+	</c:if>
+
+<%-- not empty == 비어있지 않거나, null이 아닌 경우 true --%>
+	<c:if test="${not empty deptList}" >
+		<%-- 비어있지 않을 때에만 이 테이블을 보여주겠다 --%>
+		<table border="1">
+			<%-- selectAll.jsp참고하기 --%>
+			<thead>
+			
 				<tr>
-				<%--vs.count : 현재 바퀴 횟수가 나옴(1부터 시작) --%>
-					<td>${vs.count}</td>
-					<td>${dept.deptId}</td>
-					<%--el은 출력하는 언어여서 다 getter가 호출되도록 만들어져있다 원래는 dept.getDeptId임, 필드만 써도 getter가 호출된다 --%>
-					<td>${dept.deptTitle}</td>
-					<td>${dept.locationId}</td>
-					<%--다 만들어질 때까지 반복 --%>
+					<th>행 번호</th> <%--몇 번 행인지 --%>
+					<th>부서 코드(DEPT_ID)</th>
+					<th>부서명(DEPT_TITLE)</th>
+					<th>지역 코드(LOCATION_ID)</th>
 				</tr>
-			</c:forEach>
-		</tbody>
-    </table>
-    
+			</thead>
+			<tbody>
+			
+				<c:forEach items="${deptList}" var="dept" varStatus="vs">
+				<%-- 반복하면서 한줄씩 만듦 --%>
+				<%--하나씩 꺼낸 것을 dept라고 부를거다 --%>
+				<%--deptList가 여기에 출력될거임 --%>
+					<%--반복해서 넣어야 하므로 포이치 사용 --%>
+					<%--el : 표현할 때 사용, ==${} --%>
+					<%--varStatus : 반복되는 상태 기록(몇 바퀴 돌고있는지) --%>
+					<tr>
+					<%--vs.count : 현재 바퀴 횟수가 나옴(1부터 시작) --%>
+						<td>${vs.count}</td>
+						<td>${dept.deptId}</td>
+						<%--el은 출력하는 언어여서 다 getter가 호출되도록 만들어져있다 원래는 dept.getDeptId임, 필드만 써도 getter가 호출된다 --%>
+						<td>${dept.deptTitle}</td>
+						<td>${dept.locationId}</td>
+						<%--다 만들어질 때까지 반복 --%>
+					</tr>
+				</c:forEach>
+			</tbody>
+		</table>
+    </c:if>
 </body>
 </html>

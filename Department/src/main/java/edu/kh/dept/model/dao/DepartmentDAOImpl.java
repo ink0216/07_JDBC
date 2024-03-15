@@ -197,22 +197,33 @@ public class DepartmentDAOImpl implements DepartmentDAO{
 	//부서 검색하기
 	@Override
 	public List<Department> searchDepartment(Connection conn, String keyword) throws SQLException {
-		List<Department> deptList = new ArrayList<Department>();
+		List<Department> deptList = new ArrayList<Department>(); //조회 결과를 저장할 변수/객체 생성
+		//ArrayList 객체 생성 ->처음에 만들면 null이 아닌, 비어있는 상태(참조하는 객체는 존재하지만 내용물이 없음)
 		try {
 			//1. sql 만들기
-			String sql = prop.getProperty("searchDepartment");
+			String sql = prop.getProperty("searchDepartment"); //prop == k:v 가 모두 String인 Map
 			pstmt=conn.prepareStatement(sql);
 			pstmt.setString(1, keyword);
 			
+			//SQL(SELECT) 수행 후 결과(ResultSet) 반환 받기
 			rs = pstmt.executeQuery();
+			
+			//while문으로 조회 결과를 한 행씩 접근해서 컬럼 값 모두 얻어오기
 			while(rs.next()) {
-				String deptId = rs.getString("DEPT_ID");
-				String deptTitle = rs.getString("DEPT_TITLE");
-				String locationId = rs.getString("LOCATION_ID");
+				//String deptId = rs.getString("DEPT_ID"); 이렇게 해도 되고
+				String deptId = rs.getString(1); //조회 결과 컬럼순서(1번 컬럼값 얻어오겠다) 이렇게 해도 됨!!
+				//String deptTitle = rs.getString("DEPT_TITLE");
+				String deptTitle = rs.getString(2);
+				//String locationId = rs.getString("LOCATION_ID");
+				String locationId = rs.getString(3); //근데 컬럼명 그대로 안쓰고 이렇게 숫자 쓰는것은 비추!!!
+				//추후 수정 시 컬럼 순서 바뀔 수도 있어서!
+				
 				Department dept = new Department(deptId, deptTitle, locationId);
 				deptList.add(dept);
 			}
 		}finally {
+			//finally 구문이 예외 발생하든 말든 무조건 실행되는 구문이어서
+			//사용한 객체 반환해주는 것을 필수로 하기위해 try-catch 구문 사용
 			close(rs);
 			close(pstmt);
 		}

@@ -37,8 +37,9 @@
 	WHERE DEPT_ID=?
 	</entry>
 	
+	<!--부서 검색  -->
 	<entry key="searchDepartment">
 	SELECT * FROM DEPARTMENT4
-	WHERE DEPT_TITLE LIKE '%'||?||'%'
+	WHERE DEPT_TITLE LIKE '%'||?||'%' <!-- ;찍으면 안된다!!! -->
 	</entry>
 </properties>

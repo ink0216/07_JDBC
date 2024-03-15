@@ -216,10 +216,17 @@ public class DepartmentServiceImpl implements DepartmentService{
 	//부서 검색하기
 	@Override
 		public List<Department> searchDepartment(String keyword) throws SQLException {
+			//트랜잭션의 주체가 커넥션이어서 서비스에서 커넥션 만듦 ->스프링에서는 자동으로 해줘서 안해도됨
 			//트랜잭션 제어 -> 할 필요 없음
+		//1. 커넥션 생성
 		Connection conn = getConnection();
-		List<Department> deptList = dao.searchDepartment(conn, keyword);
+		//2. DAO 메서드 호출 후 결과 반환 받기
+		List<Department> deptList = dao.searchDepartment(conn, keyword); //조회된 결과를 옮겨담아서 가져옴
+		
+		//3. 커넥션 반환
 		close(conn);
+		
+		//4. 결과 반환
 			return deptList;
 		}
 }
