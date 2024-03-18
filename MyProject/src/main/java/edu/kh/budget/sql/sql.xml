@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+<!-- 조회 -->
+<entry key="selectAll">
+	SELECT *
+	FROM TB_BUDGET
+	ORDER BY BUDGET_NO
+</entry>
+<!-- 삽입 -->
+<!-- 입금 -->
+<entry key="plus">
+	INSERT INTO TB_BUDGET (BUDGET_NO,BUDGET_CONTENT, BUDGET_OPTION, BUDGET_AMOUNT, BUDGET_LEFT)
+	VALUES(SEQ_BUDGET_NO.NEXTVAL, ?, ?, ?, 
+	(SELECT (BUDGET_LEFT+?)
+	FROM TB_BUDGET
+	WHERE BUDGET_NO=(SELECT MAX(BUDGET_NO) FROM TB_BUDGET)
+	
+	))
+</entry>
+<!-- 출금 -->
+<entry key="minus">
+	INSERT INTO TB_BUDGET (BUDGET_NO,BUDGET_CONTENT, BUDGET_OPTION, BUDGET_AMOUNT, BUDGET_LEFT)
+	VALUES(SEQ_BUDGET_NO.NEXTVAL, ?, ?, ?, 
+	(SELECT (BUDGET_LEFT-?)
+	FROM TB_BUDGET
+	WHERE BUDGET_NO=(SELECT MAX(BUDGET_NO) FROM TB_BUDGET)
+	
+	))
+</entry>
+<!-- 삭제 -->
+<entry key="delete">
+	DELETE FROM TB_BUDGET
+	WHERE BUDGET_NO=?
+</entry>
+<!-- 수정 -->
+<entry key="edit">
+	UPDATE TB_BUDGET
+	SET BUDGET_CONTENT=?,
+	BUDGET_OPTION=?,
+	BUDGET_AMOUNT=?
+  WHERE BUDGET_NO=?
+</entry>
+</properties>

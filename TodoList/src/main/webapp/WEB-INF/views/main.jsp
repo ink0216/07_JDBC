@@ -23,7 +23,7 @@
             제목 : <input type="text" name="todoTitle">
         </div>
         <div>
-            <textarea name="todoContent" id="" cols="50" rows="5" placeholder="상세 내용"></textarea>
+            <textarea name="todoContent" cols="50" rows="5" placeholder="상세 내용"></textarea>
             <%-- 가로로 50글자 세로로 5글자 들어가는 크기 --%>
         </div>
         <button>추가하기</button>

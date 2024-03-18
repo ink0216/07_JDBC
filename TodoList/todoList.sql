@@ -78,6 +78,12 @@ TODO_TITLE=?,
 TODO_CONTENT=?
 WHERE TODO_NO=? 
 
+--개인 프로젝트 Family Budget
+CREATE TABLE(
+	
+	CONTENT VARCHAR2(4000) ,--지출내용
+);
+
 
 
 
