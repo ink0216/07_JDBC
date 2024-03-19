@@ -12,5 +12,11 @@ public interface BudgetService {
 
 	int insert(String budgetContent, String budgetOption, int budgetAmount)throws SQLException;
 
+	int edit(int budgetNo,String budgetContent, int budgetAmount)throws SQLException;
+
+	int delete(int budgetNo)throws SQLException;
+
+	Budget selectBudget(int budgetNo)throws SQLException;
+
 
 }

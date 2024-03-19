@@ -14,5 +14,10 @@ public interface BudgetDAO {
 
 	int minus(Connection conn, String budgetContent, String budgetOption, int budgetAmount)throws SQLException;
 
+	int edit(Connection conn, int budgetNo)throws SQLException;
+
+	int delete(Connection conn, int budgetNo)throws SQLException;
+
+	Budget selectBudget(int budgetNo, Connection conn)throws SQLException;
 
 }

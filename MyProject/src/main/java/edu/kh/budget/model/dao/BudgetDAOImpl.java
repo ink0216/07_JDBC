@@ -105,4 +105,60 @@ public class BudgetDAOImpl implements BudgetDAO{
 		}
 			return result;
 		}
+	//수정
+	@Override
+		public int edit(Connection conn, int budgetNo) throws SQLException {
+		int result=0;
+		try {
+			String sql = prop.getProperty("edit");
+			pstmt=conn.prepareStatement(sql);
+			pstmt.setString(1, );
+			pstmt.setString(2, );
+			pstmt.setString(3, );
+			pstmt.setString(4, );
+			result=pstmt.executeUpdate();
+		}finally {
+			close(pstmt);
+		}
+			return result;
+		}
+	//한 행 조회
+	@Override
+		public Budget selectBudget(int budgetNo, Connection conn) throws SQLException {
+			Budget budget = null;
+			ResultSet rs = null;
+			try {
+				String sql = prop.getProperty("selectBudget");
+				pstmt=conn.prepareStatement(sql);
+				pstmt.setInt(1, budgetNo);
+				rs=pstmt.executeQuery();
+				if(rs.next()) {
+					int no = rs.getInt("BUDGET_NO");
+					String budgetContent = rs.getString("BUDGET_CONTENT");
+					String budgetOption = rs.getString("BUDGET_OPTION");
+					int budgetAmount = rs.getInt("BUDGET_AMOUNT");
+					int budgetLeft = rs.getInt("BUDGET_LEFT");
+					
+					budget = new Budget(no, budgetContent, budgetOption, budgetAmount, budgetLeft);
+				}
+			}finally {
+				close(rs);
+				close(pstmt);
+			}
+			return budget;
+		}
+	//삭제
+	@Override
+		public int delete(Connection conn, int budgetNo) throws SQLException {
+		int result=0;
+		try {
+			String sql = prop.getProperty("delete");
+			pstmt=conn.prepareStatement(sql);
+			pstmt.setInt(1, budgetNo);
+			result=pstmt.executeUpdate();
+		}finally {
+			close(pstmt);
+		}
+			return result;
+		}
 }

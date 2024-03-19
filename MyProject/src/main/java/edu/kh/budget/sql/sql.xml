@@ -34,11 +34,20 @@
 	WHERE BUDGET_NO=?
 </entry>
 <!-- 수정 -->
+<!-- 현재 수정하는 행의 변화량을 변화시키는 경우,
+현재 수정하는 budgetNo 초과의 budgetNo를 가지는 행들의 모든 budgetLeft값을,
+수정 이전의 값과의 차이만큼 변화시키는 SQL(차이만큼 더하거나 뺌)을 쓰기
+(UPDATE 두번??) -->
 <entry key="edit">
+	<!-- 내용 +/- 변화량 ////번호(변화 안시킨 컬럼은 그대로) -->
 	UPDATE TB_BUDGET
 	SET BUDGET_CONTENT=?,
 	BUDGET_OPTION=?,
 	BUDGET_AMOUNT=?
   WHERE BUDGET_NO=?
+</entry>
+<!-- 한 행 조회 -->
+<entry key="selectBudget">
+	SELECT * FROM TB_BUDGET WHERE BUDGET_NO=?
 </entry>
 </properties>

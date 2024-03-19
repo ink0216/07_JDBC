@@ -41,7 +41,44 @@ public class BudgetServiceImpl implements BudgetService{
 		return result;
 	}
 	//수정
-	
+	@Override
+	public int edit(int budgetNo,String budgetContent, int budgetAmount) throws SQLException {
+		int result=0;
+		Connection conn = getConnection();
+		try {
+			
+			result=dao.edit(conn,budgetNo);
+			if(result>0) commit(conn);
+			else				rollback(conn);
+		}finally {
+			close(conn);
+		}
+		return result;
+	}
+	//1행 조회
+	@Override
+	public Budget selectBudget(int budgetNo) throws SQLException {
+		Connection conn = getConnection();
+		Budget budget =null;
+		try {
+			budget=dao.selectBudget(budgetNo, conn);
+		}finally {
+			close(conn);
+		}
+		
+		return budget;
+	}
 	//삭제
-
+	@Override
+	public int delete(int budgetNo) throws SQLException {
+		int result=0;
+		Connection conn=getConnection();
+		try {
+			
+			result=dao.delete(conn,budgetNo);
+		}finally {
+			close(conn);
+		}
+		return result;
+	}
 }

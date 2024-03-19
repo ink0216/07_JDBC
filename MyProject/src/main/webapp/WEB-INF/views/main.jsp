@@ -50,5 +50,13 @@
     </tbody>
     </table>
     <script src="/resources/js/main.js"></script>
+    <c:if test="${not empty message}" >
+    <%-- 메세지 전달받아서 출력하는 구문 --%>
+    <%-- 메세지가 존재한다면 --%>
+    <script>
+        alert("${message}")
+    </script>
+    <c:remove var="message"></c:remove>
+    </c:if>
 </body>
 </html>
