@@ -34,14 +34,13 @@
         <tr>
             <th>완료 여부</th>
             <td>
+            <%-- data-* 속성 (data로 시작하는 속성)
+                - 데이터에 대한 확장성을 고려하여 설계된 속성
+                - js에서 요소.dataset 을 이용해 해당 값을 얻어갈 수 있음
+                --%>
                 <button type="button" 
                 class="complete-btn"
-                
-                
-                <%-- data-* 속성 (data로 시작하는 속성)
-        - 데이터에 대한 확장성을 고려하여 설계된 속성
-        - js에서 요소.dataset 을 이용해 해당 값을 얻어갈 수 있음
-        --%>    data-todo-no="${todo.todoNo}" <%-- data로 시작하는 속성 추가됨 --%>
+                data-todo-no="${todo.todoNo}" <%-- data로 시작하는 속성 추가됨 --%>
                 >${todo.complete}</button>
                 <%-- 버튼 클릭하면 y<->n 바뀌게 만들기 --%>
             </td>

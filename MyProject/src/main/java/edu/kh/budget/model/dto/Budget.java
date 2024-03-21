@@ -20,7 +20,7 @@ public class Budget {
 		this.budgetLeft = budgetLeft;
 	}
 
-	public Budget(String no, String budgetContent2, String budgetOption2, int budgetNo2, int budgetNo3) {
+	public Budget(String no, String budgetContent, String budgetOption2, int budgetNo2, int budgetNo3) {
 		// TODO Auto-generated constructor stub
 	}
 

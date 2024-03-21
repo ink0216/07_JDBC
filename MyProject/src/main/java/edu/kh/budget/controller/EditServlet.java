@@ -22,7 +22,7 @@ public class EditServlet extends HttpServlet{
 			
 			int budgetNo = Integer.parseInt(req.getParameter("budgetNo"));
 			Budget budget = service.selectBudget(budgetNo);
-			if(budget !=null) {
+			if(budget !=null) { //존재하면
 				req.setAttribute("budget", budget);
 				String path = "/WEB-INF/views/update.jsp";
 				req.getRequestDispatcher(path).forward(req, resp);
@@ -40,6 +40,7 @@ public class EditServlet extends HttpServlet{
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		//서비스 호출
 		BudgetService service = new BudgetServiceImpl();
+		
 		int budgetNo = Integer.parseInt(req.getParameter("budgetNo"));
 		String budgetContent = req.getParameter("budgetContent");
 		int budgetAmount = Integer.parseInt(req.getParameter("budgetAmount"));

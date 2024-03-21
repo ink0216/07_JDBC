@@ -1,5 +1,4 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -23,16 +22,9 @@
         </div>
         <%-- 할 일 번호를 숨겨서 제출할 때 같이 제출해서 쓸 수 있게 만들기 --%>
         <%-- 이게 있어야 sql에서 할 일 번호 이용해서 할 수 있음 --%>
-        <input type="hidden" name="budgetNo" value="${param.budgetNo}">
+        <input type="hidden" name="budgetNo" value="${budget.budgetNo}"> <%-- 안되면 여기를 param.budgetNo로 해보기 --%>
         <button>수정하기</button> <%-- 수정하기 버튼 누르면 세 개가 제출된다 --%>
     </form>
-    <c:if test="${not empty message}" >
-    <%-- 메세지 전달받아서 출력하는 구문 --%>
-    <%-- 메세지가 존재한다면 --%>
-    <script>
-        alert("${message}")
-    </script>
-    <c:remove var="message"/> 
-    </c:if>
+    
 </body>
 </html>
