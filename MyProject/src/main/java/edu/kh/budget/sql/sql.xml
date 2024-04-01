@@ -48,8 +48,8 @@
 	BUDGET_AMOUNT=?
   WHERE BUDGET_NO=?
 </entry>
-<!-- 내용 수정 -->
-<entry key="editContent">
+<!-- 내용/변화량 수정 -->
+<entry key="editContentAmount">
 	<!-- 내용 +/- 변화량 ////번호(변화 안시킨 컬럼은 그대로) -->
 	UPDATE TB_BUDGET
 	SET BUDGET_CONTENT=?,

@@ -106,19 +106,17 @@ public class BudgetDAOImpl implements BudgetDAO{
 			return result;
 		}
 	//수정
+	//내용/변화량 수정
 	@Override
-		public int edit(Connection conn, int budgetNo) throws SQLException {
+		public int editContentAmount(Connection conn, int budgetNo, String budgetContent, int budgetAmount) {
 		int result=0;
 		try {
-			String sql = prop.getProperty("edit");
+			//SQL 만들기
+			String sql = prop.getProperty("editContentAmount");
 			pstmt=conn.prepareStatement(sql);
-			pstmt.setString(1, );
-			pstmt.setString(2, );
-			pstmt.setString(3, );
-			pstmt.setString(4, );
-			result=pstmt.executeUpdate();
+			
 		}finally {
-			close(pstmt);
+			
 		}
 			return result;
 		}

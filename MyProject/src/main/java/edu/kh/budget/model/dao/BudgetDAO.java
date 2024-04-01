@@ -20,4 +20,13 @@ public interface BudgetDAO {
 
 	Budget selectBudget(int budgetNo, Connection conn)throws SQLException;
 
+	/**내용,변화량 수정
+	 * @param conn
+	 * @param budgetNo
+	 * @param budgetContent
+	 * @param budgetAmount
+	 * @return
+	 */
+	int editContentAmount(Connection conn, int budgetNo, String budgetContent, int budgetAmount);
+
 }
