@@ -17,6 +17,11 @@
             <%-- 기존에 있던 제목이 보여질거다 --%>
         </div>
         <div>
+            입출금(입금 : + / 출금 : -): <input type="text" name="budgetOption" value="${budget.budgetOption}">
+            <%-- input의 value속성에 적으면 내용이 이미 그렇게 채워져있다 --%>
+            <%-- 기존에 있던 제목이 보여질거다 --%>
+        </div>
+        <div>
             변화량 : <input type="number" name="budgetAmount" value="${budget.budgetAmount}">
             
         </div>

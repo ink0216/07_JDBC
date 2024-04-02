@@ -108,7 +108,7 @@ public class BudgetDAOImpl implements BudgetDAO{
 	//수정
 	//내용/변화량 수정
 	@Override
-		public int editContentAmount(Connection conn, int budgetNo, String budgetContent, int budgetAmount) {
+		public int editContentAmount(Connection conn, int budgetNo, String budgetContent, int budgetAmount,String budgetOption)throws SQLException {
 		int result=0;
 		try {
 			//SQL 만들기

@@ -41,21 +41,22 @@ public class EditServlet extends HttpServlet{
 		//서비스 호출
 		BudgetService service = new BudgetServiceImpl();
 		
-		int budgetNo = Integer.parseInt(req.getParameter("budgetNo"));
-		String budgetContent = req.getParameter("budgetContent");
-		int budgetAmount = Integer.parseInt(req.getParameter("budgetAmount"));
+		int budgetNo = Integer.parseInt(req.getParameter("budgetNo")); //번호
+		String budgetContent = req.getParameter("budgetContent"); //내용
+		String budgetOption = req.getParameter("budgetOption"); //내용
+		int budgetAmount = Integer.parseInt(req.getParameter("budgetAmount")); //변화량
 		int result = 0;
 		try {
-			result=service.edit(budgetNo, budgetContent, budgetAmount);
+			result=service.edit(budgetNo, budgetContent, budgetAmount, budgetOption);
 			String message;
 			if(result>0) { //상세페이지로 redirect
 				message="할 일 수정 성공!!";
 			}else {
 				message="할 일 수정 실패...";
 				//수정 실패 시 상세페이지로 redirect
-			}
+			} //http://localhost/budget/edit?budgetNo=4
 			req.getSession().setAttribute("message", message);
-			resp.sendRedirect("/"); //메인페이지
+			resp.sendRedirect("/budget/edit?budgetNo="+budgetNo); //상세 페이지
 		}catch(Exception e) {
 			e.printStackTrace();
 		}

@@ -18,7 +18,7 @@ public class BudgetServiceImpl implements BudgetService{
 	public BudgetServiceImpl() {
 		dao = new BudgetDAOImpl();
 	}
-	//조회
+	//전체 목록 조회
 	@Override
 	public List<Budget> selectAll()throws SQLException{
 		Connection conn = getConnection();
@@ -42,13 +42,13 @@ public class BudgetServiceImpl implements BudgetService{
 	}
 	//수정
 	@Override
-	public int edit(int budgetNo,String budgetContent, int budgetAmount) throws SQLException {
+	public int edit(int budgetNo,String budgetContent, int budgetAmount,String budgetOption) throws SQLException {
 		int result1=0;
 		int result2=0;
 		Connection conn = getConnection();
 		try {
 			//서비스의 edit메서드 하나에서 잔액 수정하는 dao 메서드 하나랑, 내용이랑 변화량 수정하는 dao메서드 하나 해서 두개를 실행하기
-			result1=dao.editContentAmount(conn,budgetNo, budgetContent, budgetAmount); //내용이랑 변화량 수정 메서드
+			result1=dao.editContentAmount(conn,budgetNo, budgetContent, budgetAmount, budgetOption); //내용이랑 변화량 수정 메서드
 			result2=dao.editRest(conn,budgetNo, budgetAmount); //잔액 수정 메서드
 			int[] resultArr = null;
 			resultArr.add(result1);
